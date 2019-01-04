@@ -1,0 +1,111 @@
+= 테스트 프레임워크 갈아타기! Spock to Spek!
+김지헌, jiheon.kim@woowahan.com
+v0.0.1, 2019-03-04
+:toc: top
+
+[WARNING]
+====
+2019-03-04까지 쓰기!
+====
+
+== 갈아타게된 동기
+[IMPORTANT]
+====
+애플리케이션과 관련된 모든 것을 코틀린 하나로 작성하고 싶었다.
+====
+
+* 2018년 코틀린 1.3이 정식출시되었다. link:https://kotlinlang.org/docs/reference/coroutines-overview.html[코루틴즈(Coroutines)] 1.0도 함께 출시했다.
+* 그레이들 5.0이 출시되면서 코틀린 DSL 1.0 을 지원하게 되었다.
+* 코틀린을 써먹을 수 있겠다!
+* 하지만 프로젝트에 바로 적용해볼 수는 없겠다. @_@);;; (해도 되겠지만)
+* 코틀린에 매력을 느끼는 사이 스폭(Spock)에 대한 아쉬운 점들을 느끼기 시작했다.
+** 동적언어의 특성, 그루비 학습, 테스트 대상 코드의 변경...
+* 그렇다면!! 스폭부터 스펙으로 바꿔서 가랑비가 옷을 적시듯 코틀린을 익히게 만들어보자.
+** 새로운 언어를 배운다는 것에 대한 거부감을 줄이려고 생각해봤다.
+
+
+== 테스트(Test)
+**개발자**라면 **누구나(?!) 자신이 작성한 코드가 정상적으로 동작하는지 확인하고 싶어한다**(라고 생각한다).
+
+작성한 코드가 정상적으로 동작하는지 확인하는 간단한 방법 중 하나는 **처리결과를 출력**하여 **자신이 예상한 결과와 동일한지 확인하는 것**이다. 이 방법은 조금 더 발전시켜 사용하면 코드가 정상동작하는 지 여부를 모니터링하는 용도로 활용된다.
+
+[NOTE]
+====
+단순한 화면(콘솔,console)출력이 아니라, 특정 위치에 정해진 형식으로 저장되는 로그파일을 남기고 이 파일을 수집정제하여 예외가 발생했을 때 알람을 전송한다거나 처리결과에 대한 통계처리를 하는 등 후처리도 가능해진다.
+====
+
+[source,java]
+----
+public class TestApplication {
+  public static void main(String[] args) {
+    int a = 1;
+    int b = 2;
+    int c = a + b;
+    System.out.println(c == 3); // <1>
+  }
+}
+----
+<1> (1 + 2) == 3 의 결과를 출력하는 간단한 확인코드다. true 가 출력되면(?) 내 의도를 충족한다.
+
+결과를 화면출력하는 것보다 조금 더 명확한 피드백을 받을 수 있으면 테스트가 조금 더 신명날 것이다. 자신이 코드가 정상적으로 동작할 때 [green]#성공(Success)# 과 [red]#실패(Failure)# 으로 즉각적으로 피드백(Feedback)해줬으면 좋겠다는 바람이 모여 테스트 프레임워크가 나왔다.
+
+== JUnit Vs. Spock Vs. Spek
+자바 프로그래밍 언어에서 사용가능한 테스트 프레임워크는 크게 JUnit, Spock과 Spek 을 뽑을 수 있다(보다 많이 있지만 생략한다).
+
+// 넓고얕게 쓰고있는 나...
+[%autowidth]
+|====
+|  |link:https://junit.org/junit5/[JUnit4/5] |link:http://spockframework.org/[Spock] |link:https://spekframework.org/[Speck]
+
+|설명
+|JUnit은 자바 기반 테스트 프레임워크다. 이름에서 알 수 있듯 단위테스트(Unit test)를 위해 탄생했다. 블라블라블라
+|Spock은 그루비 기반 테스트 프레임워크다. 블라블라블라
+|Spek은 코틀린 기반 테스트 프레임워크다. 블라블라블라라
+
+|개발언어
+|link:https://www.java.com[자바(Java)](정적언어)
+|link:http://groovy-lang.org/[그루비(Groovy)](동적언어)
+|link:https://kotlinlang.org/[코틀린(Kotlin)](정적언어)
+
+|장점
+a|
+* 1
+* 2
+* 3
+a|
+* 1
+* 2
+* 3
+a|
+* 1
+* 2
+* 3
+
+|단점
+|1
+|2
+|
+
+|====
+
+== Spek 선정이유
+[COMMENT]
+====
+코틀린을 쓰고 싶었습니다. 뜨헙...
+====
+
+=== **동적언어**보다는 **정적언어**
+
+== 정리
+
+[COMMENT]
+====
+내가 의도한 대로 **정확**하게 동작을 하는 것인지 **그런 척**하는 것인지 확인하는 것을 잊지말자.
+====
+
+== 참고문헌
+* link:https://en.wikipedia.org/wiki/Software_testing[Software testing - Wikipedia]
+* link:http://groovy-lang.org/[그루비(Groovy)]
+** link:http://spockframework.org/[Spock framework]
+* link:https://kotlinlang.org/[코틀린(Kotlin)]
+** link:https://spekframework.org/[Speck framework]
