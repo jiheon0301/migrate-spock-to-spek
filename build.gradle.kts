@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.junit.platform.launcher.EngineFilter.includeEngines
+
 buildscript {
     val kotlinVersion = "1.3.11"
     val springBootVersion = "2.1.1.RELEASE"
@@ -20,6 +22,8 @@ plugins {
 }
 
 apply {
+    plugin("java")
+    plugin("groovy")
     plugin("kotlin")
     plugin("kotlin-spring")
     plugin("kotlin-kapt") //https://kotlinlang.org/docs/reference/kapt.html
@@ -43,6 +47,15 @@ tasks {
             jvmTarget = "1.8"
         }
     }
+    withType<Test> {
+        useJUnitPlatform()
+//        {
+//            includeEngines("junit-jupiter", "junit-vintage", "spek2")
+//        }
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+    }
 }
 
 
@@ -57,26 +70,43 @@ repositories {
 val spekVersion = "2.0.0-alpha.1"
 
 dependencies {
+    // For junit 5
+
+    // For Spock
+    implementation("org.codehaus.groovy:groovy")
+    implementation("org.codehaus.groovy:groovy-test")
+    implementation("org.spockframework:spock-core:1.2-groovy-2.5")
+    implementation("org.spockframework:spock-spring:1.2-groovy-2.5")
+
     // For Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     // Spring Boot Starter
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-
-    runtimeOnly("com.h2database:h2")
+//
+//    runtimeOnly("com.h2database:h2")
 
     // For Test
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "junit")
+    }
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine")
+    testRuntime("org.junit.vintage:junit-vintage-engine")//jUnit4 를 실행하는 엔진
 
     // SPEK Framework: https://spekframework.org/
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spekVersion") {
         exclude(group = "org.jetbrains.kotlin")
     }
+    testImplementation("org.reflections:reflections:0.9.10")
     testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spekVersion") {
         exclude(group = "org.junit.platform")
         exclude(group = "org.jetbrains.kotlin")
+        // org.reflections:reflection:0.9.11 문제가 있다.
     }
+
 }
