@@ -145,6 +145,8 @@ image::./.images/2019-01-16-test-case-view.png[]
 == JUnit Vs. Spock Vs. Spek
 자바 프로그래밍 언어에서 사용가능한 테스트 프레임워크는 크게 JUnit, Spock과 Spek 을 뽑을 수 있다(보다 많이 있지만 생략한다). 각 특징에 따라 구분지어보면 다음과 같다.
 
+.테스트 프레임워크 비교
+[cols="2, 3, 3, 3"]
 |====
 |특징  |link:https://junit.org/junit5/[JUnit4/5] |link:http://spockframework.org/[Spock] |link:https://spekframework.org/[Spek]
 
