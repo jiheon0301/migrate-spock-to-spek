@@ -4,7 +4,7 @@ package io.honeymon.training.mtfss.util
 import spock.lang.Specification
 
 /**
- * SPOCK 1.2 는 junit4 기반이기 때문에 junit-vintage-engine 을 필요로 한다.
+ * SPOCK 1.2 는 junit4 기반이기 때문에 jUnit5 에서 실행하기 위해서는 junit-vintage-engine 모듈이 필요하다.
  * @author jiheon.kim on 2019-01-08
  */
 class CalculatorSpec extends Specification {
